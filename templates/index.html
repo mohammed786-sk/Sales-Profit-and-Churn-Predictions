@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RetailPulse</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#1c2340;--mut:#6b7390;--pri:#4f46e5;--side:#161b36}
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:1200px;margin:0 auto;padding:88px 20px 20px;min-height:100vh}
+header{display:flex;align-items:center;gap:12px;margin-bottom:18px}header h1{font-size:20px;margin:0;flex:1}
+#burger{display:none;border:0;background:var(--pri);color:#fff;border-radius:8px;padding:8px 12px;font-size:18px}
+.badge{background:#fef3c7;color:#92400e;padding:4px 10px;border-radius:20px;font-size:12px}
+.grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:14px}
+.charts{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{background:var(--card);border-radius:14px;padding:16px;box-shadow:0 2px 10px #1c23400d;transition:.2s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px #1c234018}
+.kpi b{display:block;font-size:22px;margin-top:4px}.kpi span{color:var(--mut);font-size:12px}
+.sec{display:none;animation:f .3s}.sec.on{display:block}@keyframes f{from{opacity:0;transform:translateY(8px)}}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+label{font-size:12px;color:var(--mut);text-transform:capitalize}
+input,select{width:100%;padding:10px;border:1px solid #d9deee;border-radius:8px;margin-top:4px;font-size:14px}
+button.go{grid-column:1/-1;padding:12px;border:0;border-radius:8px;background:var(--pri);color:#fff;font-weight:600;cursor:pointer}
+.res{margin-top:14px;font-size:15px}.res .big{font-size:30px;font-weight:700;color:var(--pri)}
+.bar{height:14px;background:#e5e8f5;border-radius:8px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;transition:width .6s}
+.err{color:#b91c1c}ul{padding-left:18px;line-height:1.7}
+table{border-collapse:collapse}td,th{border:1px solid #d9deee;padding:10px 18px;text-align:center}
+nav{position:fixed;top:0;left:0;right:0;height:64px;background:var(--side);display:flex;align-items:center;gap:14px;padding:0 24px;z-index:10;box-shadow:0 2px 14px #0003}
+.brand{color:#fff;font-weight:700;font-size:19px;white-space:nowrap;cursor:pointer}.brand small{display:block;font-size:10px;font-weight:400;color:#9aa3d6;letter-spacing:.5px}
+#menu{display:flex;gap:4px;margin-left:18px;flex:1}
+#menu a{color:#cdd2ee;padding:9px 13px;border-radius:8px;cursor:pointer;font-size:14px;white-space:nowrap;transition:.2s}
+#menu a:hover,#menu a.on{background:var(--pri);color:#fff}
+.logo{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#4f46e5,#06b6d4);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;letter-spacing:1px;box-shadow:0 0 0 3px #ffffff25;flex:none}
+.hero{background:linear-gradient(135deg,#161b36,#4f46e5);color:#fff;border-radius:18px;padding:48px 32px;margin-bottom:18px}
+.hero h2{font-size:34px;margin:12px 0 8px}.hero p{max-width:620px;color:#d6dafc;line-height:1.6;margin:0 0 22px}
+.cta{padding:12px 22px;border:0;border-radius:10px;background:#fff;color:var(--pri);font-weight:700;cursor:pointer;margin:0 10px 8px 0;transition:.2s}.cta:hover{transform:translateY(-2px)}
+.cta.ghost{background:transparent;color:#fff;border:1px solid #fff9}
+.feat{cursor:pointer}.feat h3{margin:8px 0}.feat p{color:var(--mut);margin:0;line-height:1.5;font-size:14px}.feat .ico{font-size:26px}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:22px 0 6px}
+#burger{display:none;margin-left:auto}
+@media(max-width:1150px){ #burger{display:block}#menu{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--side);padding:10px 16px;margin:0}#menu.open{display:flex}.hero h2{font-size:26px}}
+</style></head><body>
+<nav><div class="brand" onclick="go('home')">◉ RetailPulse<small>RETAILPULSE ANALYTICS PVT. LTD.</small></div>
+<div id="menu"><a data-t="home" class="on">Home</a><a data-t="dash">Dashboard</a><a data-t="sales">Sales Prediction</a><a data-t="profit">Profit Prediction</a><a data-t="churn">Customer Churn</a><a data-t="perf">Model Performance</a><a data-t="about">About</a></div>
+<button id="burger">☰</button><div class="logo" title="SK">SK</div></nav>
+<main><header id="ph" style="display:none"><h1 id="title">Dashboard</h1><span class="badge">DEMO DATA</span></header>
+
+<section class="sec on" id="home"><div class="hero"><span class="badge">DEMO DATA</span><h2>Turn retail data into business decisions</h2>
+<p>RetailPulse uses machine learning to predict sales, profit and customer churn, and shows everything in one easy dashboard.</p>
+<button class="cta" onclick="go('dash')">View Dashboard</button><button class="cta ghost" onclick="go('sales')">Try a Prediction</button></div>
+<div class="grid kpis" id="hstats"></div><div class="grid charts"><div class="card feat" onclick="go('sales')"><div class="ico">📈</div><h3>Sales Prediction</h3><p>Estimate future sales from past sales, orders and discount.</p></div><div class="card feat" onclick="go('profit')"><div class="ico">💰</div><h3>Profit Prediction</h3><p>Predict profit and see if the margin is High, Medium or Low.</p></div><div class="card feat" onclick="go('churn')"><div class="ico">👥</div><h3>Customer Churn</h3><p>Find customers who are likely to stop buying.</p></div></div></section><section class="sec" id="dash"><div class="grid kpis" id="kpis"></div>
+<div class="card" style="margin-bottom:14px"><b>Business Insights</b><ul id="ins"></ul></div>
+<div class="grid charts" id="charts"></div></section>
+
+<section class="sec" id="sales"></section><section class="sec" id="profit"></section><section class="sec" id="churn"></section>
+
+<section class="sec" id="perf"><div class="grid charts" id="perfcards"></div></section>
+
+<section class="sec" id="about"><div class="grid charts"><div class="card"><h3 style="margin-top:0">Problem Statement</h3><p style="color:var(--mut);line-height:1.6;margin:0">Businesses collect sales and customer data but often cannot predict future sales, profit or which customers will leave.</p></div><div class="card"><h3 style="margin-top:0">Objectives</h3><p style="color:var(--mut);line-height:1.6;margin:0">Predict sales and profit, find customers likely to churn, and present the results in a clear dashboard.</p></div><div class="card"><h3 style="margin-top:0">Technology</h3><p style="color:var(--mut);line-height:1.6;margin:0">Python, Flask, Pandas, NumPy, scikit-learn, SQLite, HTML, CSS, JavaScript and Chart.js.</p></div><div class="card"><h3 style="margin-top:0">Machine Learning Models</h3><p style="color:var(--mut);line-height:1.6;margin:0">Random Forest Regressor for sales and profit. Random Forest Classifier for churn. Scores are measured on unseen test data.</p></div><div class="card"><h3 style="margin-top:0">Dataset</h3><p style="color:var(--mut);line-height:1.6;margin:0">DEMO DATA generated for this project. It does not represent a real company. You can replace data/retail_data.csv with your own.</p></div><div class="card"><h3 style="margin-top:0">Workflow</h3><p style="color:var(--mut);line-height:1.6;margin:0">User, web interface, Flask backend, data processing, ML models, prediction, dashboard.</p></div></div></section></main><footer>© RetailPulse Analytics Pvt. Ltd. · Demo data · Built with Flask &amp; scikit-learn</footer>
+
+<script>
+const CATS=["Electronics","Clothing","Grocery","Furniture","Beauty"],REG=["North","South","East","West"];
+const F={sales:{t:"Sales Prediction",d:"Enter the details below to estimate sales.",btn:"PREDICT SALES",f:[["product_category",CATS],["region",REG],["prev_sales",50000],["quantity",5],["month",6],["discount",.1]]},
+profit:{t:"Profit Prediction",d:"Enter sales and cost to estimate profit and margin.",btn:"PREDICT PROFIT",f:[["product_category",CATS],["region",REG],["sales",50000],["cost",35000],["discount",.1],["quantity",5],["prev_profit",12000]]},
+churn:{t:"Customer Churn",d:"Enter customer details to see the chance of churn.",btn:"PREDICT CHURN",f:[["gender",["Male","Female"]],["customer_age",35],["total_orders",5],["total_spending",20000],["average_order_value",4000],["days_since_last_purchase",150],["complaints",2],["customer_tenure",12],["discount_usage",.1]]}};
+const inr=n=>"₹"+Number(n).toLocaleString("en-IN",{maximumFractionDigits:0});
+const nice=s=>s.replace(/_/g," ");
+// Build the three prediction forms
+for(const k in F){const d=F[k];document.getElementById(k).innerHTML=`<div class="card"><h3 style="margin:0 0 4px">${d.t}</h3><p style="color:var(--mut);margin:0 0 16px;font-size:14px">${d.d}</p><form id="f-${k}">`+d.f.map(([n,v])=>`<div><label>${nice(n)}</label>`+(Array.isArray(v)?`<select name="${n}">${v.map(o=>`<option>${o}</option>`).join("")}</select>`:`<input name="${n}" type="number" step="any" min="0" value="${v}" required>`)+`</div>`).join("")+`<button class="go">${d.btn}</button></form><div class="res" id="r-${k}"></div></div>`;
+document.getElementById("f-"+k).onsubmit=async e=>{e.preventDefault();const r=document.getElementById("r-"+k);
+const body=Object.fromEntries(new FormData(e.target));
+try{const res=await fetch("/predict-"+k,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const t=await res.text();let j;try{j=JSON.parse(t)}catch{throw new Error("Server error ("+res.status+"). Check the Vercel logs.")}
+if(!res.ok)throw new Error(j.error);
+if(k=="churn"){const c=j.probability>=50?"#dc2626":"#16a34a";r.innerHTML=`<div class="big" style="color:${c}">${j.status}</div>Churn probability: <b>${j.probability}%</b><div class="bar"><i style="width:${j.probability}%;background:${c}"></i></div>`}
+else if(k=="profit"){const c={"High Profit":"#16a34a","Medium Profit":"#d97706","Low Profit":"#dc2626"}[j.level];r.innerHTML=`Predicted Profit<div class="big">${inr(j.prediction)}</div>Profit margin: <b>${j.margin}%</b> · <b style="color:${c}">● ${j.level}</b>`}
+else r.innerHTML=`Predicted Sales<div class="big">${inr(j.prediction)}</div><small>Random Forest estimate for ${body.product_category}, ${body.region}, month ${body.month}.</small>`}
+catch(x){r.innerHTML=`<span class="err">⚠ ${x.message||"Server error"}</span>`}}}
+function go(t){document.querySelector('#menu a[data-t="'+t+'"]').click()}
+// Navigation
+document.querySelectorAll("#menu a").forEach(a=>a.onclick=()=>{document.querySelectorAll("#menu a,.sec").forEach(x=>x.classList.remove("on"));a.classList.add("on");
+document.getElementById(a.dataset.t).classList.add("on");document.getElementById("title").textContent=a.textContent;document.getElementById("ph").style.display=a.dataset.t=="home"?"none":"flex";document.getElementById("menu").classList.remove("open");scrollTo(0,0)});
+document.getElementById("burger").onclick=()=>document.getElementById("menu").classList.toggle("open");
+// Dashboard
+const cols=["#4f46e5","#06b6d4","#f59e0b","#ef4444","#10b981","#8b5cf6"];
+function chart(title,type,data,opt={}){const c=document.createElement("div");c.className="card";c.innerHTML=`<b>${title}</b><canvas></canvas>`;document.getElementById("charts").append(c);
+new Chart(c.querySelector("canvas"),{type,data,options:{responsive:true,plugins:{legend:{display:data.datasets.length>1||["doughnut","pie"].includes(type)}},...opt}})}
+const ax=(x,y)=>({scales:{x:{title:{display:1,text:x}},y:{title:{display:1,text:y}}}});
+fetch("/api/dashboard").then(r=>r.json()).then(d=>{if(d.error){document.getElementById("ins").innerHTML="<li class=err>"+d.error+"</li>";return}const k=d.kpi;document.getElementById("hstats").innerHTML=[["Orders analysed",k.orders],["Customers",k.customers],["ML models","3"],["Churn rate",k.churn.toFixed(1)+"%"]].map(([a,b])=>`<div class="card kpi"><span>${a}</span><b>${b}</b></div>`).join("");
+document.getElementById("kpis").innerHTML=[["Total Sales",inr(k.sales)],["Total Profit",inr(k.profit)],["Customers",k.customers],["Orders",k.orders],["Avg Order Value",inr(k.aov)],["Churn Rate",k.churn.toFixed(1)+"%"]].map(([a,b])=>`<div class="card kpi"><span>${a}</span><b>${b}</b></div>`).join("");
+document.getElementById("ins").innerHTML=d.insights.map(i=>`<li>${i}</li>`).join("");
+const m=d.monthly,ds=(l,v,c,x={})=>({label:l,data:v,backgroundColor:c+"55",borderColor:c,tension:.3,...x}),bar=(g,l)=>({labels:g.labels,datasets:[ds(l,g.values,cols[0],{backgroundColor:cols})]});
+chart("Monthly Sales Trend","line",{labels:m.labels,datasets:[ds("Sales",m.sales,cols[0])]},ax("Month","Sales (₹)"));
+chart("Monthly Profit Trend","line",{labels:m.labels,datasets:[ds("Profit",m.profit,cols[4])]},ax("Month","Profit (₹)"));
+chart("Sales vs Profit","bar",{labels:m.labels,datasets:[ds("Sales",m.sales,cols[0],{type:"bar"}),ds("Profit",m.profit,cols[2],{type:"line"})]},ax("Month","₹"));
+chart("Customer Churn Distribution","doughnut",{labels:["Churned","Not Churned"],datasets:[{data:d.churn,backgroundColor:["#ef4444","#10b981"]}]});
+chart("Sales by Category","bar",bar(d.category_sales,"Sales"));chart("Profit by Category","bar",bar(d.category_profit,"Profit"));
+chart("Sales by Region","bar",bar(d.region_sales,"Sales"));
+chart("Top 10 Customers","bar",bar(d.top_customers,"Sales"),{indexAxis:"y"});
+chart("Orders by Month","line",{labels:m.labels,datasets:[ds("Orders",m.orders,cols[1],{fill:true})]},ax("Month","Orders"))});
+// Model performance (real metrics from models/metrics.json)
+fetch("/api/metrics").then(r=>r.json()).then(j=>{const box=document.getElementById("perfcards");
+for(const [n,m] of Object.entries(j)){const rows=Object.entries(m).filter(([k])=>k!="confusion").map(([k,v])=>`<tr><th>${k}</th><td>${k=="R2"||n=="churn"?v.toFixed(3):v.toFixed(1)}</td></tr>`).join("");
+let cm="";if(m.confusion){const c=m.confusion;cm=`<p><b>Confusion Matrix</b></p><table><tr><th></th><th>Pred 0</th><th>Pred 1</th></tr><tr><th>Actual 0</th><td>${c[0][0]}</td><td>${c[0][1]}</td></tr><tr><th>Actual 1</th><td>${c[1][0]}</td><td>${c[1][1]}</td></tr></table>`}
+box.insertAdjacentHTML("beforeend",`<div class="card"><b style="text-transform:capitalize">${n} model</b><table style="margin-top:8px">${rows}</table>${cm}</div>`)}});
+</script></body></html>
